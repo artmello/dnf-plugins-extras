@@ -216,6 +216,40 @@ System Upgrade Plugin for DNF, Python 3 version. Enables offline system upgrades
 using the "dnf system-upgrade" command.
 %endif
 
+%package -n python2-dnf-plugin-offline-upgrade
+Summary:        Offline Upgrade Plugin for DNF
+Requires:       python2-%{name}-common = %{version}-%{release}
+%{?python_provide:%python_provide python2-%{name}-offline-upgrade}
+%if !%{with python3}
+Provides:       dnf-command(offline-upgrade)
+Provides:       %{name}-offline-upgrade = %{version}-%{release}
+Provides:       offline-upgrade = %{version}-%{release}
+Provides:       dnf-plugin-offline-upgrade = %{version}-%{release}
+%endif
+Provides:       python2-%{name}-offline-upgrade = %{version}-%{release}
+Conflicts:      python3-dnf-plugin-offline-upgrade < %{version}-%{release}
+
+%description -n python2-dnf-plugin-offline-upgrade
+Offline Upgrade Plugin for DNF, Python 2 version. Enables offline system upgrades
+using the "dnf offline-upgrade" command.
+
+%if %{with python3}
+%package -n python3-dnf-plugin-offline-upgrade
+Summary:        Offline Upgrade Plugin for DNF
+Requires:       python3-%{name}-common = %{version}-%{release}
+%{?python_provide:%python_provide python3-%{name}-offline-upgrade}
+Provides:       dnf-command(offline-upgrade)
+Provides:       %{name}-offline-upgrade = %{version}-%{release}
+Provides:       offline-upgrade = %{version}-%{release}
+Provides:       dnf-plugin-offline-upgrade = %{version}-%{release}
+Provides:       python3-%{name}-offline-upgrade = %{version}-%{release}
+Conflicts:      python2-dnf-plugin-offline-upgrade < %{version}-%{release}
+
+%description -n python3-dnf-plugin-offline-upgrade
+Offline Upgrade Plugin for DNF, Python 3 version. Enables offline system upgrades
+using the "dnf offline-upgrade" command.
+%endif
+
 %package -n python2-dnf-plugin-tracer
 Summary:        Tracer Plugin for DNF
 Requires:       python2-%{name}-common = %{version}-%{release}
@@ -369,6 +403,15 @@ PYTHONPATH="%{buildroot}%{python3_sitelib}:%{buildroot}%{python3_sitelib}/dnf-pl
 %{python3_sitelib}/dnf-plugins/system_upgrade.py
 %{python3_sitelib}/dnf-plugins/__pycache__/system_upgrade.*
 %{_mandir}/man8/dnf.plugin.system-upgrade.*
+%endif
+
+%files -n python2-dnf-plugin-offline-upgrade
+%{python2_sitelib}/dnf-plugins/offline_upgrade.*
+
+%if %{with python3}
+%files -n python3-dnf-plugin-offline-upgrade
+%{python3_sitelib}/dnf-plugins/offline_upgrade.py
+%{python3_sitelib}/dnf-plugins/__pycache__/offline_upgrade.*
 %endif
 
 %files -n python2-dnf-plugin-tracer
